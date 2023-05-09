@@ -1,7 +1,13 @@
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 
 const SignUp = () => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const handleSubmit = () => {
+
+    }
+
     return (
         <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
             <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
@@ -9,14 +15,15 @@ const SignUp = () => {
                     SignUp
                 </h1>
                 <div className="flex justify-center">
-                    <div
+                    <form
                         className="flex max-w-xs w-72 flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20 h-72 gap-5"
+                        onSubmit={handleSubmit}
                     >
                         <input type="text" className='h-12 p-4 text-black outline-0' placeholder='Enter email' />
                         <input type="text" className='h-12 p-4 text-black outline-0' placeholder='Enter password' />
                         <input type="text" className='h-12 p-4 text-black outline-0' placeholder='Enter confirm password' />
-                        <button className='border rounded-full h-full'>Sign Up</button>
-                    </div>
+                        <button className='border rounded-full h-full' type='submit'>Sign Up</button>
+                    </form>
                 </div>
                 <p className='text-white'>Already have an account {" "}
                     <Link href='/login' className='text-blue-400'>

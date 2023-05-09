@@ -1,19 +1,40 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { AiOutlineHome } from 'react-icons/ai'
 
 import { Card, CardContent, Typography, CardActions, Button } from '@mui/material'
+import { signOut, useSession } from 'next-auth/react'
+import Router from 'next/router'
+import Link from 'next/link'
 
 const Profile = () => {
+
+  const { status } = useSession()
+
+  // if the user is not autheticated then redirect user to login page
+  useEffect(() => {
+    if (status === 'unauthenticated') Router.replace('/homepage')
+  }, [status])
+
+  const handleClick = (e: { preventDefault: () => void }) => {
+    e.preventDefault()
+    if (status === 'authenticated') {
+      signOut({ redirect: false })
+      Router.replace('/homepage')
+    }
+  }
+
   return (
     <main className='p-4'>
       {/* Navbar */}
       <section className='flex justify-between mb-5'>
-
-        <AiOutlineHome className='fill-blue-500 text-3xl cursor-pointer' />
+        <Link href='/homepage'>
+          <AiOutlineHome className='fill-blue-500 text-3xl cursor-pointer' />
+        </Link>
+        <h1>Profile Page</h1>
         <div className='flex justify-evenly w-72 gap-2'>
           <button className='border rounded-full bg-black text-white w-36 h-10'>Create New Post</button>
-          <button className='border rounded-full bg-black text-white w-36'>Sign Out</button>
+          <button className='border rounded-full bg-black text-white w-36' onClick={handleClick}>Sign Out</button>
         </div>
       </section>
 

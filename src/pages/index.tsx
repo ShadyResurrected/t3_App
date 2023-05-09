@@ -2,6 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 
 import Homepage from "./homepage";
+import Login from "./login";
 import Profile from "./profile";
 import SignUp from "./signup";
 
@@ -15,8 +16,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
         {/* <SignUp /> */}
+        <Login/>
         {/* <Profile/> */}
-        <Homepage/>
+        {/* <Homepage/> */}
     </>
   );
 };
