@@ -1,11 +1,20 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
 
+import { PrismaClient } from '@prisma/client'
+
 const SignUp = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const handleSubmit = () => {
-
+    const prisma = new PrismaClient()
+    const handleSubmit = async() => {
+        const user = await prisma.user.create({
+            data: {
+              email: 'elsa@prisma.io',
+              name: 'Elsa Prisma',
+              password : '12345'
+            },
+          })
     }
 
     return (
