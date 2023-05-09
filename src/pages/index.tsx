@@ -1,8 +1,10 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Profile from "./profile";
 
+import Homepage from "./homepage";
+import Profile from "./profile";
 import SignUp from "./signup";
+
 
 const Home: NextPage = () => {
   return (
@@ -13,7 +15,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
         {/* <SignUp /> */}
-        <Profile/>
+        {/* <Profile/> */}
+        <Homepage/>
     </>
   );
 };

@@ -18,7 +18,7 @@ const Profile = () => {
       </section>
 
       {/* Blogs */}
-      <Typography sx={{fontSize : 40}}>Your Blogs</Typography>
+      <Typography sx={{ fontSize: 40 }}>Your Blogs</Typography>
       <section className='grid grid-cols-4 gap-5'>
 
         <Card sx={{ width: 220 }}>
