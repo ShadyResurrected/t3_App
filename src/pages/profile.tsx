@@ -9,16 +9,16 @@ import Link from 'next/link'
 
 const Profile = () => {
 
-  const res = useSession()
+  const { status, data } = useSession()
 
   // if the user is not autheticated then redirect user to login page
   useEffect(() => {
-    if (res.status === 'unauthenticated') Router.replace('/homepage')
-  }, [res.status])
+    if (status === 'unauthenticated') Router.replace('/homepage')
+  }, [status])
 
   const handleClick = (e: { preventDefault: () => void }) => {
     e.preventDefault()
-    if (res.status === 'authenticated') {
+    if (status === 'authenticated') {
       signOut({ redirect: false })
       Router.replace('/homepage')
     }
@@ -31,9 +31,14 @@ const Profile = () => {
         <Link href='/homepage'>
           <AiOutlineHome className='fill-blue-500 text-3xl cursor-pointer' />
         </Link>
-        <h1>Welcome {res.data?.user?.name}, {res.data?.user?.email}</h1>
+        <h1>Welcome {data?.user?.name}, {data?.user?.email}</h1>
         <div className='flex justify-evenly w-72 gap-2'>
-          <button className='border rounded-full bg-black text-white w-36 h-10'>Create New Post</button>
+          <Link href={{
+            pathname: `/createpost`,
+            query: {
+              id: data?.user?.id,
+            },
+          }}><button className='border rounded-full bg-black text-white w-36 h-10'>Create New Post</button></Link>
           <button className='border rounded-full bg-black text-white w-36' onClick={handleClick}>Sign Out</button>
         </div>
       </section>

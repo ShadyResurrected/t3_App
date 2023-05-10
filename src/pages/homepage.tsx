@@ -5,10 +5,11 @@ import { AiOutlineHome } from 'react-icons/ai'
 import { Card, CardContent, Typography, CardActions, Button, Pagination } from '@mui/material'
 import { signOut, useSession } from 'next-auth/react'
 import Router from 'next/router'
+import Link from 'next/link'
 
 const Homepage = () => {
 
-    const { status } = useSession()
+    const { status, data } = useSession()
 
     const handleClick = (e: { preventDefault: () => void }) => {
         e.preventDefault()
@@ -23,7 +24,12 @@ const Homepage = () => {
                 <AiOutlineHome className='fill-blue-500 text-3xl cursor-pointer' />
                 <h1>Home Page</h1>
                 <div className='flex justify-evenly w-96 gap-2'>
-                    {status === "authenticated" && <button className='border rounded-full bg-black text-white w-36 h-10'>Create New Post</button>}
+                    {status === "authenticated" && <Link href={{
+                        pathname: `/createpost`,
+                        query: {
+                            id: data?.user?.id,
+                        },
+                    }}> <button className='border rounded-full bg-black text-white w-36 h-10'>Create New Post</button> </Link>}
                     {status === "authenticated" && <button className='border rounded-full bg-black text-white w-36 h-10' onClick={() => Router.replace('/profile')}>View Profile</button>}
                     <button className='border rounded-full bg-black text-white w-36' onClick={handleClick}>{status === 'unauthenticated' ? "Log In" : "Sign Out"}</button>
                 </div>

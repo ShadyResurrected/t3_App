@@ -41,9 +41,6 @@ const authOptions: NextAuthOptions = {
               password: hashedPassword,
               name: name,
             },
-            select: {
-              id: true,
-            },
           });
 
           newUser = await prisma.user.findUnique({
@@ -72,6 +69,29 @@ const authOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: "/login",
+  },
+  callbacks: {
+    session: ({ session, token }) => {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+          randomKey: token.randomKey,
+        },
+      };
+    },
+    jwt: ({ token, user }) => {
+      if (user) {
+        const u = user as unknown as any;
+        return {
+          ...token,
+          id: u.id,
+          randomKey: u.randomKey,
+        };
+      }
+      return token;
+    },
   },
 };
 

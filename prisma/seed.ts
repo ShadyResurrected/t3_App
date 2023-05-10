@@ -1,8 +1,8 @@
-import { prisma } from "../src/server/db";
+import { PrismaClient } from "@prisma/client";
 
-async function main() {
+const prisma = new PrismaClient();
 
-}
+async function main() {}
 
 main()
   .then(async () => {

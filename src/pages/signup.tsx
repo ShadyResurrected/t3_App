@@ -36,10 +36,10 @@ const SignUp = () => {
                         className="flex max-w-xs w-72 flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20 h-84 gap-5"
                         onSubmit={handleSubmit}
                     >
-                        <input type="text" className='h-12 p-4 text-black outline-0' placeholder='Enter name' onChange={e => setName(e.target.value)} />
-                        <input type="text" className='h-12 p-4 text-black outline-0' placeholder='Enter email' onChange={e => setEmail(e.target.value)} />
-                        <input type="password" className='h-12 p-4 text-black outline-0' placeholder='Enter password' onChange={e => setPassword(e.target.value)} />
-                        <input type="password" className='h-12 p-4 text-black outline-0' placeholder='Enter confirm password' onChange={e => setConfirmPassword(e.target.value)} />
+                        <input type="text" className='h-12 p-4 text-black outline-0' required placeholder='Enter name' onChange={e => setName(e.target.value)} />
+                        <input type="text" className='h-12 p-4 text-black outline-0' required placeholder='Enter email' onChange={e => setEmail(e.target.value)} />
+                        <input type="password" className='h-12 p-4 text-black outline-0' required placeholder='Enter password' onChange={e => setPassword(e.target.value)} />
+                        <input type="password" className='h-12 p-4 text-black outline-0' required placeholder='Enter confirm password' onChange={e => setConfirmPassword(e.target.value)} />
                         <button className='border rounded-full h-full' type='submit'>Sign Up</button>
                     </form>
                 </div>

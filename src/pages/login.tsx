@@ -1,4 +1,4 @@
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import Router from 'next/router'
 import React, { FormEventHandler, useState } from 'react'
@@ -16,8 +16,8 @@ const Login = () => {
             password,
             redirect: false // prevent it from redirecting
         })
-        if (res?.ok === true) Router.replace('/homepage')
-        
+        if (res?.ok === true) return Router.replace('/homepage')
+
     }
 
     return (
@@ -32,8 +32,8 @@ const Login = () => {
                         onSubmit={handleSubmit}
                     >
                         <input type="text" className='h-12 p-4 text-black outline-0' placeholder='Enter name' onChange={e => setName(e.target.value)} />
-                        <input type="text" className='h-12 p-4 text-black outline-0' placeholder='Enter email' onChange={e => setEmail(e.target.value)} />
-                        <input type="password" className='h-12 p-4 text-black outline-0' placeholder='Enter password' onChange={e => setPassword(e.target.value)} />
+                        <input type="email" className='h-12 p-4 text-black outline-0' required placeholder='Enter email' onChange={e => setEmail(e.target.value)} />
+                        <input type="password" className='h-12 p-4 text-black outline-0' required placeholder='Enter password' onChange={e => setPassword(e.target.value)} />
                         <button className='border rounded-full h-full'>Log In</button>
                     </form>
                 </div>
