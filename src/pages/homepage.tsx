@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+
+import axios from 'axios'
 
 import { AiOutlineHome } from 'react-icons/ai'
 
@@ -17,6 +19,16 @@ const Homepage = () => {
         else Router.replace('/login')
     }
 
+    const [posts, setPosts] = useState([])
+
+    useEffect(() => {
+        axios.get('http://localhost:3000/api/posts/getAll')
+            .then((res) => setPosts(res.data))
+            .catch(err => console.log(err))
+    }, [])
+
+    console.log(posts)
+
     return (
         <main className='p-4'>
             {/* Navbar */}
@@ -30,7 +42,14 @@ const Homepage = () => {
                             id: data?.user?.id,
                         },
                     }}> <button className='border rounded-full bg-black text-white w-36 h-10'>Create New Post</button> </Link>}
-                    {status === "authenticated" && <button className='border rounded-full bg-black text-white w-36 h-10' onClick={() => Router.replace('/profile')}>View Profile</button>}
+                    {status === "authenticated" &&
+                        <Link href={{
+                            pathname: `/profile`,
+                            query: {
+                                id: data?.user?.id,
+                            },
+                        }}>
+                            <button className='border rounded-full bg-black text-white w-36 h-10'>View Profile</button> </Link>}
                     <button className='border rounded-full bg-black text-white w-36' onClick={handleClick}>{status === 'unauthenticated' ? "Log In" : "Sign Out"}</button>
                 </div>
             </section>
@@ -39,103 +58,25 @@ const Homepage = () => {
             <Typography sx={{ fontSize: 40 }}>Your Blogs</Typography>
             <section className='grid grid-cols-4 gap-5'>
 
-                <Card sx={{ width: 220 }}>
-                    <CardContent>
-                        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-                            Blog Heading
-                        </Typography>
-                        <Typography sx={{ mb: 1.5, fontSize: 12 }} color="text.secondary">
-                            Small Description
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button size="small">Read More</Button>
-                    </CardActions>
-                </Card>
+                {
+                    posts.map((article) => (
+                        <Card sx={{ width: 220 }}>
+                            <CardContent>
+                                <Typography sx={{ fontSize: 18 }} color="text.secondary" gutterBottom>
+                                    {article?.title}
+                                </Typography>
+                                <Typography sx={{ mb: 1.5, fontSize: 10 }} color="text.secondary">
+                                    {article?.content}
+                                </Typography>
+                            </CardContent>
+                            <CardActions>
+                                <Button size="small">Read More</Button>
+                            </CardActions>
+                        </Card>
+                    ))
+                }
 
-                <Card sx={{ width: 220 }}>
-                    <CardContent>
-                        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-                            Blog Heading
-                        </Typography>
-                        <Typography sx={{ mb: 1.5, fontSize: 12 }} color="text.secondary">
-                            Small Description
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button size="small">Read More</Button>
-                    </CardActions>
-                </Card>
 
-                <Card sx={{ width: 220 }}>
-                    <CardContent>
-                        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-                            Blog Heading
-                        </Typography>
-                        <Typography sx={{ mb: 1.5, fontSize: 12 }} color="text.secondary">
-                            Small Description
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button size="small">Read More</Button>
-                    </CardActions>
-                </Card>
-
-                <Card sx={{ width: 220 }}>
-                    <CardContent>
-                        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-                            Blog Heading
-                        </Typography>
-                        <Typography sx={{ mb: 1.5, fontSize: 12 }} color="text.secondary">
-                            Small Description
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button size="small">Read More</Button>
-                    </CardActions>
-                </Card>
-
-                <Card sx={{ width: 220 }}>
-                    <CardContent>
-                        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-                            Blog Heading
-                        </Typography>
-                        <Typography sx={{ mb: 1.5, fontSize: 12 }} color="text.secondary">
-                            Small Description
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button size="small">Read More</Button>
-                    </CardActions>
-                </Card>
-
-                <Card sx={{ width: 220 }}>
-                    <CardContent>
-                        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-                            Blog Heading
-                        </Typography>
-                        <Typography sx={{ mb: 1.5, fontSize: 12 }} color="text.secondary">
-                            Small Description
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button size="small">Read More</Button>
-                    </CardActions>
-                </Card>
-
-                <Card sx={{ width: 220 }}>
-                    <CardContent>
-                        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-                            Blog Heading
-                        </Typography>
-                        <Typography sx={{ mb: 1.5, fontSize: 12 }} color="text.secondary">
-                            Small Description
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button size="small">Read More</Button>
-                    </CardActions>
-                </Card>
 
             </section>
 
