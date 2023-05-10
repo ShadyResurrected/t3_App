@@ -3,13 +3,20 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 const prisma = new PrismaClient();
 
-export default async function getAll(
+export default async function getPost(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+
+    const {postId} = req.body
+
   try {
-    const post = await prisma.post.findMany();
-    res.status(200).json(post);
+    const singlePost = await prisma.post.findUnique({
+        where : {
+            id : postId
+        }
+    });
+    res.status(200).json(singlePost);
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: "Error fetching posts" });

@@ -27,8 +27,6 @@ const Homepage = () => {
             .catch(err => console.log(err))
     }, [])
 
-    console.log(posts)
-
     return (
         <main className='p-4'>
             {/* Navbar */}
@@ -70,7 +68,15 @@ const Homepage = () => {
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button size="small">Read More</Button>
+                                <Link href={{
+                                    pathname: `/editpost`,
+                                    query: {
+                                        id: article?.authorId,
+                                        postId: article?.id
+                                    },
+                                }}>
+
+                                    <Button size="small">Read More</Button></Link>
                             </CardActions>
                         </Card>
                     ))
