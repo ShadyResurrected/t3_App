@@ -9,9 +9,17 @@ import { signOut, useSession } from 'next-auth/react'
 import Router from 'next/router'
 import Link from 'next/link'
 
-import { useRouter } from 'next/router'
+export async function getServerSideProps(context) {
+  //you can make DB queries using the data in context.query
+  return {
+    props: {
+      authorId: context.query.id
+    }
+  }
+}
 
-const Profile = () => {
+
+const Profile = (props) => {
 
   const { status, data } = useSession()
 
@@ -27,17 +35,16 @@ const Profile = () => {
       Router.replace('/homepage')
     }
   }
-
-  const router = useRouter()
-  // Extracting user id from query in url
-  const userId = Number(router.query.id)
+  const userId = Number(props.authorId)
 
   const [posts, setPosts] = useState([])
 
   useEffect(() => {
     axios.post('http://localhost:3000/api/posts/getSingle', {
       "authorId": userId
-    }).then((res) => setPosts(res.data))
+    }).then((res) => {
+      setPosts(res.data)
+    })
       .catch(err => console.log(err))
   }, [])
 
@@ -76,7 +83,15 @@ const Profile = () => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="small">Read More</Button>
+                <Link href={{
+                  pathname: `/editpost`,
+                  query: {
+                    id: article?.authorId,
+                    postId: article?.id
+                  },
+                }}>
+                  <Button size="small">Read More</Button>
+                </Link>
               </CardActions>
             </Card>
           ))

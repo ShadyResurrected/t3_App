@@ -23,7 +23,9 @@ const Homepage = () => {
 
     useEffect(() => {
         axios.get('http://localhost:3000/api/posts/getAll')
-            .then((res) => setPosts(res.data))
+            .then((res) => {
+                setPosts(res.data)
+            })
             .catch(err => console.log(err))
     }, [])
 
@@ -58,7 +60,7 @@ const Homepage = () => {
 
                 {
                     posts.map((article) => (
-                        <Card sx={{ width: 220 }}>
+                        <Card sx={{ width: 220 }} key={article.id}>
                             <CardContent>
                                 <Typography sx={{ fontSize: 18 }} color="text.secondary" gutterBottom>
                                     {article?.title}

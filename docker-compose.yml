@@ -10,5 +10,15 @@ services:
       - postgres:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+
+  redis:
+    image: redislabs/redis
+    container_name: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - data01:/usr/share/redis/data
 volumes:
   postgres:
+  data01:
+    driver: local
