@@ -11,7 +11,7 @@ import Link from 'next/link'
 
 import toast from 'react-hot-toast';
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: { query: { postId: any; id: any } }) {
     //you can make DB queries using the data in context.query
     return {
         props: {
@@ -21,7 +21,7 @@ export async function getServerSideProps(context) {
     }
 }
 
-const editpost = (props) => {
+const editpost = (props: { postId: any; authorId: any }) => {
     const { status, data } = useSession()
 
     const handleClick = (e: { preventDefault: () => void }) => {

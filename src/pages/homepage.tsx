@@ -93,6 +93,13 @@ const Homepage = () => {
                                 <Typography sx={{ mb: 1.5, fontSize: 10 }} color="text.secondary">
                                     {article?.content}
                                 </Typography>
+                                <Typography sx={{ mb: 1.5, fontSize: 10}} color="text.secondary">
+                                    {new Date(article?.createdAt).toDateString()}
+                                </Typography>
+                                <Typography sx={{ mb: 1.5, fontSize: 10}} color="text.secondary">
+                                    {`Author Id : ${article?.authorId}`}
+                                </Typography>
+
                             </CardContent>
                             <CardActions>
                                 <Link href={{

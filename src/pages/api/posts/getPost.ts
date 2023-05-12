@@ -31,7 +31,7 @@ export default async function getPost(
     res.status(200).json(singlePost);
   } catch (e) {
     console.error(e);
-    res.status(500).json({ message: e.message });
+    res.status(500).json({ message: "Error fetching posts" });
   } finally {
     await prisma.$disconnect();
   }

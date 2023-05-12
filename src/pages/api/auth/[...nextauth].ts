@@ -53,7 +53,7 @@ const authOptions: NextAuthOptions = {
             id: newUser?.id,
             email: newUser?.email,
             name: newUser?.name,
-          };
+          } as any;
         } else {
           const isPasswordMatch = await compare(password, user.password);
           if (!isPasswordMatch) throw new Error("Invalid Email or Password");
@@ -63,7 +63,7 @@ const authOptions: NextAuthOptions = {
           id: user?.id,
           email: user?.email,
           name: user?.name,
-        };
+        } as any;
       },
     }),
   ],
