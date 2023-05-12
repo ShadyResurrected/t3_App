@@ -35,7 +35,21 @@ const Homepage = () => {
     const lastIndex = currentPage * postsPerPage;
     const firstIndex = lastIndex - postsPerPage
 
-    const records = posts.slice(firstIndex, lastIndex)
+    const sortedBlogPosts = posts.sort((a, b) => {
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+
+        if (dateA.getTime() === dateB.getTime()) {
+            // If the dates are equal, sort by time
+            return dateB.getHours() - dateA.getHours();
+        }
+
+        // Sort by date
+        return dateB.getTime() - dateA.getTime();
+    });
+
+    const records = sortedBlogPosts.slice(firstIndex, lastIndex)
+
 
     const npage = Math.ceil(posts.length / postsPerPage)
     const numbers = [...Array(npage + 1).keys()].slice(1)
