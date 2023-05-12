@@ -2,6 +2,7 @@ import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import Router from 'next/router'
 import React, { FormEventHandler, useState } from 'react'
+import toast from 'react-hot-toast'
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -16,7 +17,10 @@ const Login = () => {
             password,
             redirect: false // prevent it from redirecting
         })
-        if (res?.ok === true) return Router.replace('/homepage')
+        if (res?.ok === true) {
+            toast.success("Logged In Successfully")
+            Router.replace('/homepage')
+        } else toast.error('Something went wrong')
 
     }
 
@@ -32,8 +36,8 @@ const Login = () => {
                         onSubmit={handleSubmit}
                     >
                         <input type="text" className='h-12 p-4 text-black outline-0' placeholder='Enter name' onChange={e => setName(e.target.value)} />
-                        <input type="email" className='h-12 p-4 text-black outline-0' required placeholder='Enter email' onChange={e => setEmail(e.target.value)} />
-                        <input type="password" className='h-12 p-4 text-black outline-0' required placeholder='Enter password' onChange={e => setPassword(e.target.value)} />
+                        <input type="email" className='h-12 p-4 text-black outline-0' required placeholder='* Enter email' onChange={e => setEmail(e.target.value)} />
+                        <input type="password" className='h-12 p-4 text-black outline-0' required placeholder='* Enter password' onChange={e => setPassword(e.target.value)} />
                         <button className='border rounded-full h-full'>Log In</button>
                     </form>
                 </div>

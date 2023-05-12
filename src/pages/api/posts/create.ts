@@ -23,10 +23,10 @@ export default async function createPost(
     });
 
     // Invalidating the redis cache
-    await jsonCache.del(authorId)
-    await jsonCache.del("posts")
+    await jsonCache.del(authorId);
+    await jsonCache.del("posts");
 
-    res.status(201).json(post);
+    res.status(201).json({ post, success: true });
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: "Error creating post" });

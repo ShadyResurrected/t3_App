@@ -1,25 +1,25 @@
 import { Button, TextField } from '@mui/material'
 import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
-import { Router } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { AiOutlineHome } from 'react-icons/ai'
 import { useRouter } from 'next/router'
 import axios from 'axios'
+import toast from 'react-hot-toast'
 
 const CreatePost = () => {
     const res = useSession()
 
     // if the user is not autheticated then redirect user to login page
     useEffect(() => {
-        if (res.status === 'unauthenticated') Router.replace('/homepage')
+        if (res.status === 'unauthenticated') router.push('/homepage')
     }, [res.status])
 
     const handleClick = (e: { preventDefault: () => void }) => {
         e.preventDefault()
         if (res.status === 'authenticated') {
             signOut({ redirect: false })
-            Router.replace('/homepage')
+            router.push('/homepage')
         }
     }
 
@@ -32,11 +32,16 @@ const CreatePost = () => {
     const userId = Number(router.query.id)
 
     const handleSubmit = async () => {
-        await axios.post(`${process.env.NEXT_PUBLIC_AUTH_URL}/api/posts/create`, {
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_AUTH_URL}/api/posts/create`, {
             "title": title,
             "content": content,
             "authorId": userId
         })
+
+        if (res?.data?.success) {
+            toast.success("Post created successfully!")
+            router.push('/homepage')
+        }
     }
 
 
