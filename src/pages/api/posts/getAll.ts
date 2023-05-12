@@ -1,16 +1,12 @@
-
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { redis } from "lib/redis";
-import JSONCache from "redis-json";
 import { prisma } from "lib/prisma";
+import { jsonCache } from "lib/redis";
 
 export default async function getAll(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const jsonCache = new JSONCache(redis);
-
   try {
     const cachedPosts = await jsonCache.get("posts");
 

@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { redis } from "lib/redis";
-import JSONCache from "redis-json";
+import { jsonCache } from "lib/redis";
 import { prisma } from "lib/prisma";
 
 export default async function getSingle(
@@ -9,7 +8,7 @@ export default async function getSingle(
   res: NextApiResponse
 ) {
   const { authorId } = req.body;
-  const jsonCache = new JSONCache(redis);
+
   let cachedValue, singlePost;
 
   try {

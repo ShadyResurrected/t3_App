@@ -52,7 +52,6 @@ const editpost = (props) => {
             .catch((err) => console.log(err))
     }, [])
 
-
     const handleEdit = () => {
         if (status === 'unauthenticated') return toast.error('Login First')
         if (authorId !== Number(data?.user?.id)) return toast.error('Cannot edit another user post');
