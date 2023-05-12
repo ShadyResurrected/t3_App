@@ -1,10 +1,9 @@
-import { PrismaClient } from "@prisma/client";
-import { NextApiRequest, NextApiResponse } from "next";
 
-const prisma = new PrismaClient();
+import { NextApiRequest, NextApiResponse } from "next";
 
 import { redis } from "lib/redis";
 import JSONCache from "redis-json";
+import { prisma } from "lib/prisma";
 
 export default async function getAll(
   req: NextApiRequest,

@@ -1,13 +1,15 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const prisma = new PrismaClient();
+import { redis } from "lib/redis";
+import JSONCache from "redis-json";
 
 export default async function createPost(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const { title, content, authorId } = req.body;
+  const jsonCache = new JSONCache(redis);
 
   try {
     const post = await prisma.post.create({
@@ -19,6 +21,11 @@ export default async function createPost(
         },
       },
     });
+
+    // Invalidating the redis cache
+    await jsonCache.del(authorId)
+    await jsonCache.del("posts")
+
     res.status(201).json(post);
   } catch (e) {
     console.error(e);

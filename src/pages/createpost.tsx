@@ -32,7 +32,7 @@ const CreatePost = () => {
     const userId = Number(router.query.id)
 
     const handleSubmit = async () => {
-        await axios.post('http://localhost:3000/api/posts/create', {
+        await axios.post(`${process.env.NEXT_PUBLIC_AUTH_URL}/api/posts/create`, {
             "title": title,
             "content": content,
             "authorId": userId

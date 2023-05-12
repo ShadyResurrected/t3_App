@@ -22,12 +22,23 @@ const Homepage = () => {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/posts/getAll')
+        axios.get(`${process.env.NEXT_PUBLIC_AUTH_URL}/api/posts/getAll`)
             .then((res) => {
                 setPosts(res.data)
             })
             .catch(err => console.log(err))
     }, [])
+
+    const [currentPage, setCurrentPage] = useState(1)
+
+    const postsPerPage = 10;
+    const lastIndex = currentPage * postsPerPage;
+    const firstIndex = lastIndex - postsPerPage
+
+    const records = posts.slice(firstIndex, lastIndex)
+
+    const npage = Math.ceil(posts.length / postsPerPage)
+    const numbers = [...Array(npage + 1).keys()].slice(1)
 
     return (
         <main className='p-4'>
@@ -59,7 +70,7 @@ const Homepage = () => {
             <section className='grid grid-cols-4 gap-5'>
 
                 {
-                    posts.map((article) => (
+                    records.map((article) => (
                         <Card sx={{ width: 220 }} key={article.id}>
                             <CardContent>
                                 <Typography sx={{ fontSize: 18 }} color="text.secondary" gutterBottom>
@@ -90,10 +101,39 @@ const Homepage = () => {
 
             {/* Pagination */}
             <section className='flex justify-center mt-5' >
-                <Pagination count={10} color="primary" />
+                <div className="pagination">
+                    <a href="#" onClick={prevPage}>&laquo;</a>
+                    {
+                        numbers.map((n, i) => (
+                            <a
+                                href="#"
+                                key={i}
+                                className={`${currentPage === n ? 'active' : ''}`}
+                                onClick={() => changeCPage(n)}
+                            >{n}</a>
+                        ))
+                    }
+                    <a href="#" onClick={nextPage}>&raquo;</a>
+                </div>
             </section>
         </main>
     )
+
+    function changeCPage(id: number) {
+        setCurrentPage(id)
+    }
+
+    function prevPage() {
+        if (currentPage !== 1) {
+            setCurrentPage(currentPage - 1)
+        }
+    }
+
+    function nextPage() {
+        if (currentPage !== npage) {
+            setCurrentPage(currentPage + 1)
+        }
+    }
 }
 
 export default Homepage

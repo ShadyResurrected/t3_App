@@ -40,7 +40,7 @@ const Profile = (props) => {
   const [posts, setPosts] = useState([])
 
   useEffect(() => {
-    axios.post('http://localhost:3000/api/posts/getSingle', {
+    axios.post(`${process.env.NEXT_PUBLIC_AUTH_URL}/api/posts/getSingle`, {
       "authorId": userId
     }).then((res) => {
       setPosts(res.data)

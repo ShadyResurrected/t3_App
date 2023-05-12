@@ -43,7 +43,7 @@ const editpost = (props) => {
 
 
     useEffect(() => {
-        axios.post('http://localhost:3000/api/posts/getPost', {
+        axios.post(`${process.env.NEXT_PUBLIC_AUTH_URL}/api/posts/getPost`, {
             postId
         }).then((res) => {
             setTitle(res.data.title)
@@ -61,7 +61,7 @@ const editpost = (props) => {
     }
 
     const handleSave = async () => {
-        const res = await axios.put('http://localhost:3000/api/posts/updatePost', {
+        const res = await axios.put(`${process.env.NEXT_PUBLIC_AUTH_URL}/api/posts/updatePost`, {
             title, content, postId
         })
 
